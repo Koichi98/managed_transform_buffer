@@ -14,9 +14,13 @@ option(BUILD_EXAMPLES "Build examples" OFF)
 find_package(ament_cmake_auto REQUIRED)
 ament_auto_find_build_dependencies()
 
+find_package(agnocastlib REQUIRED)
+
 ament_auto_add_library(${PROJECT_NAME} SHARED
   src/managed_transform_buffer.cpp
   src/managed_transform_buffer_provider.cpp
+  src/agnocast_managed_transform_buffer.cpp
+  src/agnocast_managed_transform_buffer_provider.cpp
 )
 
 if(BUILD_TESTING)
