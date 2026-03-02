@@ -84,8 +84,9 @@ AgnocastManagedTransformBufferProvider::AgnocastManagedTransformBufferProvider(
   logger_(rclcpp::get_logger("agnocast_managed_transform_buffer"))
 {
   executor_ = std::make_shared<agnocast::AgnocastOnlySingleThreadedExecutor>();
-  executor_thread_ = std::make_shared<std::thread>(
-    std::bind(&agnocast::AgnocastOnlySingleThreadedExecutor::spin, executor_));
+  executor_thread_ = std::make_shared<std::thread>([this]() {
+    executor_->spin();
+  });
 
   static_tf_buffer_ = std::make_unique<TFMap>();
   tf_tree_ = std::make_unique<TreeMap>();
@@ -133,7 +134,7 @@ void AgnocastManagedTransformBufferProvider::activateListener()
     "/tf", tf2_ros::DynamicListenerQoS(), std::move(cb), tf_options_);
   tf_static_sub_ = node_->create_subscription<tf2_msgs::msg::TFMessage>(
     "/tf_static", tf2_ros::StaticListenerQoS(), std::move(cb_static), tf_static_options_);
-  executor_->add_callback_group(callback_group_);
+  executor_->add_callback_group(callback_group_, node_->get_node_base_interface());
 }
 
 void AgnocastManagedTransformBufferProvider::deactivateListener()
