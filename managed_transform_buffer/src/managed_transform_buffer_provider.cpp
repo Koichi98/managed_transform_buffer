@@ -160,8 +160,8 @@ void ManagedTransformBufferProvider::activateListener()
       "/tf_static", tf2_ros::StaticListenerQoS(), cb_static_, AUTOWARE_SUBSCRIPTION_OPTIONS{});
     agnocast_executor_ = std::make_shared<agnocast::AgnocastOnlySingleThreadedExecutor>();
     agnocast_executor_->add_node(agnocast_node_->get_agnocast_node());
-    executor_thread_ = std::make_shared<std::thread>(
-      [executor = agnocast_executor_]() { executor->spin(); });
+    executor_thread_ =
+      std::make_shared<std::thread>([executor = agnocast_executor_]() { executor->spin(); });
     return;
   }
 #endif

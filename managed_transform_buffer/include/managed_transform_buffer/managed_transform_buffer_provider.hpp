@@ -22,7 +22,6 @@
 
 #ifdef USE_AGNOCAST_ENABLED
 #include <agnocast/node/agnocast_only_single_threaded_executor.hpp>
-
 #include <autoware/agnocast_wrapper/autoware_agnocast_wrapper.hpp>
 #include <autoware/agnocast_wrapper/node.hpp>
 #include <autoware/agnocast_wrapper/tf2.hpp>
@@ -260,8 +259,8 @@ private:
 #ifdef USE_AGNOCAST_ENABLED
   std::shared_ptr<autoware::agnocast_wrapper::Node> agnocast_node_{nullptr};
   std::shared_ptr<agnocast::AgnocastOnlySingleThreadedExecutor> agnocast_executor_{nullptr};
-  AUTOWARE_SUBSCRIPTION_PTR(tf2_msgs::msg::TFMessage) agnocast_tf_sub_{nullptr};
-  AUTOWARE_SUBSCRIPTION_PTR(tf2_msgs::msg::TFMessage) agnocast_tf_static_sub_{nullptr};
+  AUTOWARE_SUBSCRIPTION_PTR(tf2_msgs::msg::TFMessage) agnocast_tf_sub_ { nullptr };
+  AUTOWARE_SUBSCRIPTION_PTR(tf2_msgs::msg::TFMessage) agnocast_tf_static_sub_ { nullptr };
 #endif
   std::unique_ptr<TFMap> static_tf_buffer_;
   std::unique_ptr<TreeMap> tf_tree_;
